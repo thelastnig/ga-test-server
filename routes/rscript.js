@@ -15,22 +15,30 @@ admin.initializeApp({
 router.get('/', (req, res) => {
 
     var words = [];
-
+    var articles = [];
     var db = admin.database();
     var ref = db.ref("/");
     var wordsRef = ref.child('words');
-
+    var articleRef = ref.child("articles");
     wordsRef.once('value', function(snapshots) {
         
         snapshots.forEach(function(snapshot) {
             var word = snapshot.val();
             var array = Object.keys(word);
             var each = array[0];
-            console.log(each);
             words.push(each);
-        })
+        });
 
-        res.send({status: "success", words: words});
+        articleRef.once('value', function(snapshots) {
+        
+            snapshots.forEach(function(snapshot) {
+                var article = snapshot.val();
+                articles.push(article);
+            });
+        
+            res.send({status: "success", words: words, articles: articles});
+
+        })
     })
 
  
@@ -47,8 +55,8 @@ router.post('/', (req, res) => {
 
     var today = new Date();
 
-    var usersRef = ref.child("articles");
-    usersRef.push({
+    var articleRef = ref.child("articles");
+    articleRef.push({
         content: text,
         date: today.toString()
     }, function(error) {
