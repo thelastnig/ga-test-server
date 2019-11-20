@@ -30,18 +30,13 @@ router.get('/', (req, res) => {
         });
 
         articleRef.once('value', function(snapshots) {
-        
             snapshots.forEach(function(snapshot) {
                 var article = snapshot.val();
                 articles.push(article);
             });
-        
             res.send({status: "success", words: words, articles: articles});
-
         })
     })
-
- 
 } );
  
 /* POST : "/rscript" */
