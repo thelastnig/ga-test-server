@@ -7,7 +7,12 @@ const bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+// 자동 완성을 위한 명사 추출(R)
 var rscript = require('./routes/rscript');
+
+// 크롤링 테스트
+var best = require('./routes/best');
 
 var app = express();
 
@@ -26,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/rscript', rscript);
+app.use('/best', best);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
