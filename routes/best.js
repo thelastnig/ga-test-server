@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
     const data = ulList.filter(n => n.title);
     return data;
   })
-  .then(res => log(res));
+  .then(response => res.send({status: 'success', data: response}) );
 
 });
 
