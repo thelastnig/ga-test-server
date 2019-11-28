@@ -11,7 +11,6 @@ router.get('/naverKeyword', (req, res) => {
   
   const getHtml = async () => {
     try {
-      //return await axios.get("https://www.yna.co.kr/sports/all");
       return await axios.get("https://datalab.naver.com/keyword/realtimeList.naver?where=main");
 
     } catch (error) {
@@ -23,21 +22,12 @@ router.get('/naverKeyword', (req, res) => {
   .then(html => {
     let ulList = [];
     const $ = cheerio.load(html.data);
-    // const $bodyList = $("div.headline-list ul").children("li.section02");
-    const $bodyList = $("div.rank_inner[data-age='all'] ul").children("li");
+    const $bodyList = $("div.ranking_box").children("ul.ranking_list").children("li");
 
     $bodyList.each(function(i, elem) {
       ulList[i] = {
-          num: $(this).find('em.num').text(),
-          title: $(this).find('span.title').text() 
-          /*
-          title: $(this).find('strong.news-tl a').text(),
-          url: $(this).find('strong.news-tl a').attr('href'),
-          image_url: $(this).find('p.poto a img').attr('src'),
-          image_alt: $(this).find('p.poto a img').attr('alt'),
-          summary: $(this).find('p.lead').text().slice(0, -11),
-          date: $(this).find('span.p-time').text()
-          */
+          num: $(this).find('span.item_num').text(),
+          title: $(this).find('span.item_title').text() 
       };
     });
 
@@ -162,7 +152,6 @@ router.get('/ilbe', (req, res) => {
     const $ = cheerio.load(html.data);
     const $bodyList = $("a.widget-more[href='/list/ilbe']").next().children("li");
     
-
     $bodyList.each(function(i, elem) {
       ulList[i] = {
           title: $(this).text(), 
@@ -172,6 +161,7 @@ router.get('/ilbe', (req, res) => {
 
     const data = ulList.filter(n => n.title);
     return data;
+    
   })
   .then(response => res.send({status: 'success', data: response}) );
 });
@@ -193,7 +183,7 @@ router.get('/instiz', (req, res) => {
   .then(html => {
     let ulList = [];
     const $ = cheerio.load(html.data);
-    const $bodyList = $("a[href='//www.instiz.net/bbs/list.php?id=pt&srt=3']").parent().parent().next().children("div.index_block_all").children("div.index_block_list");
+    const $bodyList = $("div.index_block_all").eq(9).children("div.index_block_list");
     
     $bodyList.each(function(i, elem) {
       ulList[i] = {
@@ -225,11 +215,7 @@ router.get('/ruliweb', (req, res) => {
   getHtml()
   .then(html => {
     let ulList = [];
-    
-    const strContents = Buffer.from(html);
-    const convertedhtml = iconv.decode(strContents, 'utf-8').toString();
-
-    const $ = cheerio.load(convertedhtml.data);
+    const $ = cheerio.load(html.data);
     const $bodyList = $("div.list.best_date.active").children("ul.col").children("li");
     
     $bodyList.each(function(i, elem) {
@@ -247,7 +233,9 @@ router.get('/ruliweb', (req, res) => {
 });
 
 
+
 // 뽐뿌 
+/*
 router.get('/ppomppu', (req, res) => {
   
   const getHtml = async () => {
@@ -266,9 +254,112 @@ router.get('/ppomppu', (req, res) => {
     const $bodyList = $("div.hot-post-list").children("ul:first-child").children("li");
     
     $bodyList.each(function(i, elem) {
+
+      
       ulList[i] = {
           title: $(this).find('a.title ').text(),
           link: $(this).find('a.title ').attr('href')
+      };
+    });
+
+    const data = ulList.filter(n => n.title);
+    return data;
+    
+  })
+  .then(response => res.send({status: 'success', data: response}) );
+});
+*/
+
+// 클리앙 
+router.get('/clien', (req, res) => {
+  
+  const getHtml = async () => {
+    try {
+      return await axios.get("https://www.clien.net/service/");
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  getHtml()
+  .then(html => {
+    let ulList = [];
+    const $ = cheerio.load(html.data);
+    const $bodyList = $("div.section_list.recommended").children("div.section_body").children("div.list_item");
+    
+    $bodyList.each(function(i, elem) {
+      ulList[i] = {
+          title: $(this).find('span.subject').text(),
+          link: $(this).find('a.list_subject').attr('href')
+      };
+    });
+
+    const data = ulList.filter(n => n.title);
+    return data;
+    
+  })
+  .then(response => res.send({status: 'success', data: response}) );
+});
+
+
+// 나무위키 
+router.get('/namu', (req, res) => {
+  
+  const getHtml = async () => {
+    try {
+      return await axios.get("https://namu.live");
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  getHtml()
+  .then(html => {
+    let ulList = [];
+    const $ = cheerio.load(html.data);
+    const $bodyList = $("div.link-list").eq(3).children("a");
+    
+    $bodyList.each(function(i, elem) {
+      ulList[i] = {
+          title: $(this).text(),
+          link: $(this).attr('href')
+      };
+    });
+
+    const data = ulList.filter(n => n.title);
+    return data;
+    
+    
+  })
+  .then(response => res.send({status: 'success', data: response}) );
+});
+
+
+
+// Reddit 
+router.get('/reddit', (req, res) => {
+  
+  const getHtml = async () => {
+    try {
+      return await axios.get("https://www.reddit.com");
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  getHtml()
+  .then(html => {
+    let ulList = [];
+    const $ = cheerio.load(html.data);
+    const $bodyList = $("div.section_list.recommended").children("div.section_body").children("div.list_item");
+    
+    $bodyList.each(function(i, elem) {
+      ulList[i] = {
+          title: $(this).find('span.subject').text(),
+          link: $(this).find('a.list_subject').attr('href')
       };
     });
 
