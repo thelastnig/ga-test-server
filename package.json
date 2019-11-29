@@ -20,6 +20,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "r-script": "0.0.4",
-    "synonyms": "^1.0.1"
+    "synonyms": "^1.0.1",
+    "wordpos": "^1.2.0"
   }
 }
