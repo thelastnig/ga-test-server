@@ -61,7 +61,7 @@ router.post('/', (req, res) => {
             return;
         } else {
             // 저장 후 게시글에서 명사만 추출하여 자동 완성 DB에 저장
-            var cmd = 'Rscript ./public/rscripts/extract_noun.R ' + text;
+            var cmd = `Rscript ./public/rscripts/text_mining_wrapper.R "${text}"`;
         
             exec(cmd, (error, stdout, stderr) => {
                 if(error) {

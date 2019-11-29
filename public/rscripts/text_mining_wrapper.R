@@ -15,11 +15,11 @@ source("./public/rscripts/SelectTaggedWords.R")
 source("./public/rscripts/RemoveTags.R")
 
 
-#source("C:/Users/pjw/ga/ga-test-server/public/rscripts/text_mining.R")
-#source("C:/Users/pjw/ga/ga-test-server/public/rscripts/tagPOS.R")
-#source("C:/Users/pjw/ga/ga-test-server/public/rscripts/SplitText.R")
-#source("C:/Users/pjw/ga/ga-test-server/public/rscripts/SelectTaggedWords.R")
-#source("C:/Users/pjw/ga/ga-test-server/public/rscripts/RemoveTags.R")
+# source("C:/Users/pjw/ga/ga-test-server/public/rscripts/text_mining.R")
+# source("C:/Users/pjw/ga/ga-test-server/public/rscripts/tagPOS.R")
+# source("C:/Users/pjw/ga/ga-test-server/public/rscripts/SplitText.R")
+# source("C:/Users/pjw/ga/ga-test-server/public/rscripts/SelectTaggedWords.R")
+# source("C:/Users/pjw/ga/ga-test-server/public/rscripts/RemoveTags.R")
 
 
 #attach(input[[1]])
@@ -41,5 +41,3 @@ tagged_words <- RemoveTags(tagged_words)
 selected_words <- unique(tagged_words)          
 result <- paste(selected_words, collapse = " ")
 cat(result)
-
-
