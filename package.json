@@ -15,10 +15,12 @@
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "firebase-admin": "^8.7.0",
+    "google-trends-api": "^4.9.0",
     "http-errors": "~1.6.3",
     "iconv-lite": "^0.5.0",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "nounfinder": "^2.0.14",
     "r-script": "0.0.4",
     "synonyms": "^1.0.1",
     "wordpos": "^1.2.0"

@@ -3,7 +3,7 @@ var router = express.Router();
 const axios = require('axios');
 const cheerio = require('cheerio');
 const iconv = require('iconv-lite');
-
+const googleTrends = require('google-trends-api');
 
 
 // 네이버 검색어
@@ -40,33 +40,16 @@ router.get('/naverKeyword', (req, res) => {
 
 // 구글 검색어
 router.get('/googleKeyword', (req, res) => {
-  
-  const getHtml = async () => {
-    try {
-      return await axios.get("https://trends.google.co.kr/trends/trendingsearches/daily?geo=US");
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  getHtml()
-  .then(html => {
-    let ulList = [];
-    const $ = cheerio.load(html.data);
-    const $bodyList = $("div.feed-list-wrapper").children("div.details-wrapper");
-
-    $bodyList.each(function(i, elem) {
-      console.log($(this).find("a"));
-      ulList[i] = {
-          title: $(this).find("a").text() 
-      };
-    });
-
-    const data = ulList.filter(n => n.title);
-    return data;
-  })
-  .then(response => res.send({status: 'success', data: response}) );
+  googleTrends.realTimeTrends({
+  geo: 'US',
+  category: 'all',
+  }, function(err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    } 
+  });
 });
 
 
