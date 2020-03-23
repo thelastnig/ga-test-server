@@ -4,7 +4,7 @@ var child_process = require('child_process');
 var exec = child_process.exec;
 var R = require("r-script");
 var admin = require('firebase-admin');
-var serviceAccount = require("C:/Users/pjw/ga/ga-test-server/firebaseAdmin.json");
+var serviceAccount = require("C:/Users/mm-desktop/backup/ga/ga-test-server/firebaseAdmin.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

@@ -17,6 +17,9 @@ var noun = require('./routes/noun');
 // 자동 완성을 위한 명사 추출(Node - nounfinder)
 var nounfinder = require('./routes/nounfinder');
 
+// word2vec
+var word2vec = require('./routes/word2vec');
+
 // 크롤링 테스트
 var best = require('./routes/best');
 
@@ -39,6 +42,7 @@ app.use('/users', usersRouter);
 app.use('/rscript', rscript);
 app.use('/noun', noun);
 app.use('/nounfinder', nounfinder);
+app.use('/word2vec', word2vec);
 app.use('/best', best);
 
 // catch 404 and forward to error handler
